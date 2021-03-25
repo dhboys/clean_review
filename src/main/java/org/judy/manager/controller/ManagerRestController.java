@@ -2,6 +2,7 @@ package org.judy.manager.controller;
 
 import java.util.List;
 
+import org.judy.common.util.PageDTO;
 import org.judy.manager.dto.ManagerDTO;
 import org.judy.manager.service.ManagerService;
 import org.springframework.http.HttpStatus;
@@ -25,12 +26,13 @@ public class ManagerRestController {
 
 	private final ManagerService service;
 	
-	@GetMapping(value = "/listJson" , produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<List<ManagerDTO>> getList(){
+	@GetMapping(value = "/listJson/{page}/{perSheet}" , produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<List<ManagerDTO>> getList(@PathVariable("page") int page ,
+													@PathVariable("perSheet") int perSheet ){
 		
+		PageDTO pageDTO = PageDTO.builder().page(page).perSheet(perSheet).build();
 		
-		
-		return new ResponseEntity<List<ManagerDTO>> ( service.getMemberList(), HttpStatus.OK);
+		return new ResponseEntity<List<ManagerDTO>> ( service.getManagerList(pageDTO), HttpStatus.OK);
 	}
 	
 	

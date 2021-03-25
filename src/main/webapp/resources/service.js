@@ -1,8 +1,8 @@
 const service = (function(){
 
-	function sendList(){
+	function sendList(page , perSheet){
 	
-		return fetch("http://localhost:8080/manager/listJson" ,
+		return fetch("/manager/listJson/"+page+"/"+perSheet ,
 		
 		{ method : 'get'}
 		

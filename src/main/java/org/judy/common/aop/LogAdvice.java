@@ -21,6 +21,7 @@ public class LogAdvice {
 		
 		try {
 			 log.info(pjp.getSignature());
+			 log.info(pjp.getTarget());
 			 log.info(pjp.getArgs());
 			 
 			 result = pjp.proceed();
