@@ -10,9 +10,15 @@ public interface ManagerService {
 
 	List<ManagerDTO> getManagerList(PageDTO pageDTO);
 	
+	List<ManagerDTO> delManagerList(PageDTO pageDTO);
+	
 	ManagerDTO selectOne(String mid);
 	
 	int totalMan(PageDTO pageDTO);
+	
+	void enabled(String mid);
+	
+	void registerMan(ManagerDTO managerDTO);
 	
 	default ManagerDTO toDTO(Manager manager) {
 		ManagerDTO dto = ManagerDTO.builder()

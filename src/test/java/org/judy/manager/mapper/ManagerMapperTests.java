@@ -25,15 +25,20 @@ public class ManagerMapperTests {
 	
 	@Test
 	public void testGetMemberList() {
-		log.info("12312312");
 		PageDTO pageDTO = PageDTO.builder().page(1).perSheet(10).type(null).keyword(null).build();
 		
 		log.info(mapper.getManagerList(pageDTO));
 	}
+	@Test
+	public void testDelMemberList() {
+		PageDTO pageDTO = PageDTO.builder().page(1).perSheet(10).type(null).keyword(null).build();
+		
+		log.info(mapper.delManagerList(pageDTO));
+	}
 	
 	@Test
 	public void testSelectOne() {
-		log.info(mapper.selectOne("테스트1"));
+		log.info(mapper.selectOne("user147"));
 	}
 	
 	@Test
@@ -45,11 +50,9 @@ public class ManagerMapperTests {
 											.email("asdf@asdf.asd")
 											.phone("01012345678")
 											.logoImg("/resources/img/noimg.jpg")
-											.enabled(true)
-											.approval(true)
 											.build();
 											
-		mapper.insertMan(manager);
+		mapper.registerMan(manager);
 		}		
 	}
 	
@@ -57,5 +60,10 @@ public class ManagerMapperTests {
 	public void testTotal() {
 		PageDTO pageDTO = PageDTO.builder().type("s").keyword("후").build();
 		log.info(mapper.totalMan(pageDTO));
+	}
+	
+	@Test
+	public void testEnabled() {
+		log.info(mapper.enabled("user147"));
 	}
 }

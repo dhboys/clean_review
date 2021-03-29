@@ -9,14 +9,15 @@ import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Builder.Default;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @ToString
 public class ManagerDTO {
 
@@ -28,8 +29,10 @@ public class ManagerDTO {
 	String phone;
 	
 	String sname;
-	
-	Boolean enabled,approval;
+	@Default
+	Boolean enabled = false;
+	@Default
+	Boolean approval = false;
 	
 	String logoImg;
 	

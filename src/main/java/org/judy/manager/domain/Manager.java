@@ -11,6 +11,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import lombok.Builder.Default;
 
 @Data
 @AllArgsConstructor
@@ -27,7 +28,10 @@ public class Manager {
 	
 	String sname;
 	
-	Boolean enabled,approval;
+	@Default
+	Boolean enabled = false;
+	@Default
+	Boolean approval = false;
 	
 	String logoImg;
 	
