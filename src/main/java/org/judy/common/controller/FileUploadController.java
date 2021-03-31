@@ -11,7 +11,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import org.judy.common.util.FileDTO;
+import org.judy.common.util.ManagerFileDTO;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -20,18 +20,32 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.util.MimeType;
 import org.springframework.util.MimeTypeUtils;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.extern.log4j.Log4j;
 import net.coobird.thumbnailator.Thumbnailator;
 @Log4j
-@Controller
+@RestController
 @RequestMapping("/common")
 public class FileUploadController {
 
+	@DeleteMapping("/removeFile")
+	public ResponseEntity<String> removeFile(@RequestBody ManagerFileDTO managerFileDTO){
+		
+		String filePath = managerFileDTO.getUploadPath();
+		
+		log.info(filePath);
+		
+		
+		return new ResponseEntity<String>("success" , HttpStatus.OK);
+	}
+	
 	@GetMapping("/view")
 	public ResponseEntity<byte[]> view(String file) {
 		
@@ -73,12 +87,11 @@ public class FileUploadController {
 	
 	
 	@PostMapping(value =  "/manager/upload", produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<List<FileDTO>> postUpload(MultipartFile[] files){
+	public ResponseEntity<List<ManagerFileDTO>> postUpload(MultipartFile[] files){
 	
-		
 		String path = "C:\\upload\\temp\\admin\\manager";
 		
-		List<FileDTO> fileList = new ArrayList<>();
+		List<ManagerFileDTO> fileList = new ArrayList<>();
 		
 		for (MultipartFile multipartFile : files) {
 		
@@ -101,7 +114,7 @@ public class FileUploadController {
 			
 			File saveFile = new File(uploadPath , fileName);
 			
-			FileDTO fileDTO = FileDTO.builder().fileName(multipartFile.getOriginalFilename()).uploadPath(uploadPath.toString()).uuid(uuid.toString()).image(isImage).build();
+			ManagerFileDTO managerFileDTO = ManagerFileDTO.builder().fileName(multipartFile.getOriginalFilename()).uploadPath(uploadPath.toString()).uuid(uuid.toString()).image(isImage).build();
 			
 			
 			try { 
@@ -116,7 +129,7 @@ public class FileUploadController {
 					fos.close();
 				}
 				
-				 fileList.add(fileDTO);
+				 fileList.add(managerFileDTO);
 				
 			
 				
@@ -126,7 +139,7 @@ public class FileUploadController {
 	
 		} // end for
 		
-	return new ResponseEntity<List<FileDTO>>(fileList, HttpStatus.OK);
+	return new ResponseEntity<List<ManagerFileDTO>>(fileList, HttpStatus.OK);
 	
 	}
 	

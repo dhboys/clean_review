@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class FileDTO {
+public class ManagerFileDTO {
 
 	private String fileName;
 	private String uploadPath;

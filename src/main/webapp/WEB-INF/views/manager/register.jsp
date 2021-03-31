@@ -48,7 +48,7 @@
 						<p class="card-category">Complete your profile</p>
 					</div>
 					<div class="card-body">
-						<form>
+						
 							<div class="row">
 								<div class="col-md-6">
 									<div class="form-group">
@@ -87,14 +87,16 @@
 								</div>
 							
 							<div class="row">
-								<div class="col-md-12">
+								<div class="col-md-6">
 									<div class="form-group bmd-form-group is-focused">
 										<label class="bmd-label-floating">LogoImg</label> 
 										
 									</div>
-									<div style = "margin-bottom: 10px">
+									
+									<div style = "margin-bottom: 10px">								
 										<input type="file" name="uploadLogo" class="form-control" id="inputGroupFile02" >
 									</div>
+									
 									<div class = "fileThumb">
 									
 									</div>
@@ -107,7 +109,7 @@
 							
 							
 							<div class="clearfix"></div>
-						</form>
+						
 					</div>
 				</div>
 			</div>
@@ -147,8 +149,8 @@
 }) */
 
 	
-
-document.querySelector(".modBtn").addEventListener("click", function(e){
+// fileUpload
+document.querySelector("input[name='uploadLogo']").addEventListener("change", function(e){
 	e.preventDefault()
 	console.log(e.target)
 	const fd = new FormData() 
@@ -173,13 +175,27 @@ document.querySelector(".modBtn").addEventListener("click", function(e){
 		for (var i = 0; i < result.length; i++) {
 			let file = result[i]
 			console.log(file.link)
-		document.querySelector(".fileThumb").innerHTML += "<img src='/admin/common/view?file="+file.link+"' style = 'width: 90px; height: 90px' />"
+		document.querySelector(".fileThumb").innerHTML = "<img src='/admin/common/view?file="+file.thumbLink+"' style = 'width: 90px; height: 90px' />" +
+														 "<button onclick=sendRemove("+JSON.stringify(file)+")'>DEL</button>"
 			
 		}
-	})
-	
-	
+	})		
 })
+
+// removeFile
+
+
+
+function sendRemove(param){
+	
+	alert("remove")
+	console.log(param)
+	fetch("/admin/common/manager/removeFile" , {
+		method : 'delete' ,
+		headers : {'Content-Type':'application/json'} ,
+		body : param
+	}).then(res => console.log(res))
+}
 
 
 

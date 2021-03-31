@@ -6,7 +6,9 @@
 
 	<select id="getStore" resultType="org.judy.store.domain.Store">
 		<![CDATA[
-  		select * from tbl_store where mid = #{mid}
+  		select * from tbl_store ts
+		left join tbl_simg tsi on ts.sno = tsi.sno
+		where ts.sno = #{sno}
   		]]>
 	</select>
 
